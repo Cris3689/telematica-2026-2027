@@ -29,14 +29,14 @@ public class Matriz {
         // Si alguna fila es null, lanzamos una excepción.
         columnas = 0;
 
-        for (int i = 0; i < valores.length; i++) {
-            if (valores[i] == null) {
+        for (double[] fila : valores) {
+            if (fila == null) {
                 throw new IllegalArgumentException(
                         "Las filas no pueden ser null");
             }
 
-            if (valores[i].length > columnas) {
-                columnas = valores[i].length;
+            if (fila.length > columnas) {
+                columnas = fila.length;
             }
         }
 
@@ -55,9 +55,7 @@ public class Matriz {
         datos = new double[filas][columnas];
 
         for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < valores[i].length; j++) {
-                datos[i][j] = valores[i][j];
-            }
+            System.arraycopy(valores[i], 0, datos[i], 0, valores[i].length);
         }
     }
 

@@ -1,6 +1,7 @@
 package Y;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import org.junit.Test;
 
 
@@ -105,50 +106,45 @@ public class MatrizTest {
         assertEquals(4.0, matriz.getElemento(1, 1), 0.0);
     }
 
-    /*
-     * Comprobamos que el constructor lanza una excepción si recibe
-     * un array null o vacío.
-     */
-    @Test(expected = IllegalArgumentException.class)
+    /* Comprobamos que el constructor rechaza un array null. */
+    @Test
     public void constructorMatrizNull() {
-        new Matriz(null);
+        assertEquals("La matriz debe tener al menos una fila",
+            assertThrows(IllegalArgumentException.class, () -> new Matriz(null)).getMessage());
     }  
     
-    /*
-     * Comprobamos que el constructor lanza una excepción si recibe
-     * un array vacío.
-     */
-    @Test(expected = IllegalArgumentException.class)
+    /* Comprobamos que el constructor rechaza un array vacío. */
+    @Test
     public void constructorMatrizVacia() {
-        new Matriz(new double[0][]);
+        assertEquals("La matriz debe tener al menos una fila",
+            assertThrows(IllegalArgumentException.class,
+                () -> new Matriz(new double[0][])).getMessage());
     }
 
-    /*
-     * Comprobamos que el constructor lanza una excepción si recibe
-     * todos los arrays con filas vacías.
-     */
-    @Test(expected = IllegalArgumentException.class)
+    /* Comprobamos que el constructor rechaza filas sin columnas. */
+    @Test
     public void constructorMatrizConFilasVacias() {
         double[][] datos = {
             { },
             { }
         };
 
-        new Matriz(datos);
+        assertEquals("La matriz debe tener al menos una columna",
+            assertThrows(IllegalArgumentException.class,
+                () -> new Matriz(datos)).getMessage());
     }
 
-    /*
-     * Comprobamos que el constructor lanza una excepción si recibe
-     * un array con filas null.
-     */
-    @Test(expected = IllegalArgumentException.class)
+    /* Comprobamos que el constructor rechaza filas null. */
+    @Test
     public void constructorMatrizConFilasNull() {
         double[][] datos = {
             { 1.0, 2.0 },
             null
         };
 
-        new Matriz(datos);
+        assertEquals("Las filas no pueden ser null",
+            assertThrows(IllegalArgumentException.class,
+                () -> new Matriz(datos)).getMessage());
     }
 }
     
